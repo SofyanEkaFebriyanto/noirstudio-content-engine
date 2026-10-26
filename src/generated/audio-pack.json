@@ -1,0 +1,125 @@
+{
+  "generatedAt": "2026-10-26T09:13:37.028Z",
+  "entries": [
+    {
+      "id": "bed-tension",
+      "file": "audio/pack/bed-tension.mp3",
+      "duration": 30,
+      "kind": "bed",
+      "category": "low drone bed",
+      "license": "Generated locally with ffmpeg — placeholder, replace before publishing",
+      "source": "ffmpeg:lavfi",
+      "prompt": "placeholder: low drone bed"
+    },
+    {
+      "id": "click",
+      "file": "audio/pack/click.mp3",
+      "duration": 0.12,
+      "kind": "cue",
+      "category": "noise tick",
+      "license": "Generated locally with ffmpeg — placeholder, replace before publishing",
+      "source": "ffmpeg:lavfi",
+      "prompt": "placeholder: noise tick"
+    },
+    {
+      "id": "impact",
+      "file": "audio/pack/impact.mp3",
+      "duration": 1.6,
+      "kind": "cue",
+      "category": "low sine thump",
+      "license": "Generated locally with ffmpeg — placeholder, replace before publishing",
+      "source": "ffmpeg:lavfi",
+      "prompt": "placeholder: low sine thump"
+    },
+    {
+      "id": "pop",
+      "file": "audio/pack/pop.mp3",
+      "duration": 0.25,
+      "kind": "cue",
+      "category": "short blip",
+      "license": "Generated locally with ffmpeg — placeholder, replace before publishing",
+      "source": "ffmpeg:lavfi",
+      "prompt": "placeholder: short blip"
+    },
+    {
+      "id": "riser",
+      "file": "audio/pack/riser.mp3",
+      "duration": 3,
+      "kind": "cue",
+      "category": "steady tone (riser placeholder)",
+      "license": "Generated locally with ffmpeg — placeholder, replace before publishing",
+      "source": "ffmpeg:lavfi",
+      "prompt": "placeholder: steady tone (riser placeholder)"
+    },
+    {
+      "id": "sparkle",
+      "file": "audio/pack/sparkle.mp3",
+      "duration": 1.2,
+      "kind": "cue",
+      "category": "high bell-ish tone",
+      "license": "Generated locally with ffmpeg — placeholder, replace before publishing",
+      "source": "ffmpeg:lavfi",
+      "prompt": "placeholder: high bell-ish tone"
+    },
+    {
+      "id": "swoosh-quick",
+      "file": "audio/pack/swoosh-quick.mp3",
+      "duration": 0.5,
+      "kind": "cue",
+      "category": "band-passed tick",
+      "license": "Generated locally with ffmpeg — placeholder, replace before publishing",
+      "source": "ffmpeg:lavfi",
+      "prompt": "placeholder: band-passed tick"
+    },
+    {
+      "id": "transition-snap",
+      "file": "audio/pack/transition-snap.mp3",
+      "duration": 0.6,
+      "kind": "cue",
+      "category": "muted transient",
+      "license": "Generated locally with ffmpeg — placeholder, replace before publishing",
+      "source": "ffmpeg:lavfi",
+      "prompt": "placeholder: muted transient"
+    },
+    {
+      "id": "transition-soft",
+      "file": "audio/pack/transition-soft.mp3",
+      "duration": 0.9,
+      "kind": "cue",
+      "category": "soft noise swish",
+      "license": "Generated locally with ffmpeg — placeholder, replace before publishing",
+      "source": "ffmpeg:lavfi",
+      "prompt": "placeholder: soft noise swish"
+    },
+    {
+      "id": "type",
+      "file": "audio/pack/type.mp3",
+      "duration": 2,
+      "kind": "cue",
+      "category": "keyboard-ish hiss",
+      "license": "Generated locally with ffmpeg — placeholder, replace before publishing",
+      "source": "ffmpeg:lavfi",
+      "prompt": "placeholder: keyboard-ish hiss"
+    },
+    {
+      "id": "whoosh-fast",
+      "file": "audio/pack/whoosh-fast.mp3",
+      "duration": 0.7,
+      "kind": "cue",
+      "category": "short bright noise",
+      "license": "Generated locally with ffmpeg — placeholder, replace before publishing",
+      "source": "ffmpeg:lavfi",
+      "prompt": "placeholder: short bright noise"
+    },
+    {
+      "id": "whoosh-soft",
+      "file": "audio/pack/whoosh-soft.mp3",
+      "duration": 1.4,
+      "kind": "cue",
+      "category": "filtered noise sweep",
+      "license": "Generated locally with ffmpeg — placeholder, replace before publishing",
+      "source": "ffmpeg:lavfi",
+      "prompt": "placeholder: filtered noise sweep"
+    }
+  ]
+}

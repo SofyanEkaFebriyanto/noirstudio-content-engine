@@ -1,0 +1,192 @@
+{
+  "id": "build-log-45s",
+  "label": "Build log — 45 seconds, vertical",
+  "format": "reel",
+  "theme": "signal",
+  "description": "Where we are, what broke, what we changed, what is next. For build-in-public updates.",
+  "structure": "C",
+  "scenes": [
+    {
+      "id": "state",
+      "shot": "big-statement",
+      "durationInFrames": 150,
+      "props": {
+        "kicker": "Build log 04",
+        "lines": [
+          "The engine *runs*."
+        ]
+      }
+    },
+    {
+      "id": "friction",
+      "shot": "list-stack",
+      "durationInFrames": 354,
+      "props": {
+        "header": "What broke",
+        "items": [
+          {
+            "index": "01",
+            "text": "Captions drifted",
+            "note": "Edited VO, stale alignment."
+          },
+          {
+            "index": "02",
+            "text": "Layout floated",
+            "note": "Positioned by percentage, not by box."
+          },
+          {
+            "index": "03",
+            "text": "Mix clipped",
+            "note": "Cues stacked under the bed."
+          }
+        ],
+        "highlight": 0
+      },
+      "transition": {
+        "type": "slide",
+        "durationInFrames": 12,
+        "direction": "from-right"
+      }
+    },
+    {
+      "id": "fix",
+      "shot": "process-flow",
+      "durationInFrames": 382,
+      "props": {
+        "heading": "What we changed",
+        "steps": [
+          {
+            "title": "One caption band",
+            "note": "Clear of platform chrome."
+          },
+          {
+            "title": "One layout box",
+            "note": "Safe margins and caption room."
+          },
+          {
+            "title": "One audio inventory",
+            "note": "Missing files skip, never crash."
+          }
+        ]
+      },
+      "transition": {
+        "type": "fade",
+        "durationInFrames": 12
+      }
+    },
+    {
+      "id": "next",
+      "shot": "word-cycle",
+      "durationInFrames": 228,
+      "props": {
+        "words": [
+          "Voice.",
+          "Captions.",
+          "Publish."
+        ],
+        "framesPerWord": 22,
+        "heading": "Next up",
+        "accentIndex": 2
+      },
+      "transition": {
+        "type": "fade",
+        "durationInFrames": 10
+      }
+    },
+    {
+      "id": "close",
+      "shot": "end-card",
+      "durationInFrames": 282,
+      "props": {
+        "line": "Building in public.",
+        "cta": "Follow the build",
+        "handle": "@noirstudio"
+      },
+      "transition": {
+        "type": "fade",
+        "durationInFrames": 12
+      }
+    }
+  ],
+  "captions": {
+    "mode": "words",
+    "style": "kinetic",
+    "windowWords": 5
+  },
+  "audio": {
+    "music": [
+      {
+        "src": "bed-tension",
+        "volume": 0.28,
+        "loop": true,
+        "fadeInFrames": 24,
+        "fadeOutFrames": 44
+      }
+    ],
+    "cues": [
+      {
+        "at": 0.2,
+        "cue": "whoosh-soft",
+        "volume": 0.6
+      },
+      {
+        "at": 1.2,
+        "cue": "sparkle",
+        "volume": 0.45
+      },
+      {
+        "at": 5.1,
+        "cue": "whoosh-soft",
+        "volume": 0.5
+      },
+      {
+        "at": 12.3,
+        "cue": "swoosh-quick",
+        "volume": 0.42
+      },
+      {
+        "at": 16.5,
+        "cue": "whoosh-soft",
+        "volume": 0.5
+      },
+      {
+        "at": 24.3,
+        "cue": "swoosh-quick",
+        "volume": 0.42
+      },
+      {
+        "at": 28.8,
+        "cue": "whoosh-soft",
+        "volume": 0.5
+      },
+      {
+        "at": 33.4,
+        "cue": "swoosh-quick",
+        "volume": 0.42
+      },
+      {
+        "at": 36.1,
+        "cue": "riser",
+        "volume": 0.32
+      },
+      {
+        "at": 36.9,
+        "cue": "impact",
+        "volume": 0.5
+      },
+      {
+        "at": 41.2,
+        "cue": "sparkle",
+        "volume": 0.45
+      }
+    ]
+  },
+  "publish": {
+    "title": "Build log",
+    "caption": "Three things broke. Here is what changed.",
+    "hashtags": [
+      "noirstudio",
+      "buildinpublic"
+    ]
+  }
+}

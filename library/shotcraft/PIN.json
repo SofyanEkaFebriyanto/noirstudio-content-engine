@@ -1,0 +1,7 @@
+{
+  "repo": "Vincentwei1021/video-shotcraft",
+  "commit": "43bd349a136651865ecfa6ea1cf012f6e957d304",
+  "vendoredAt": "2026-10-25T16:37:37.958Z",
+  "license": "Apache-2.0 (see library/shotcraft/LICENSE)",
+  "note": "Reference material for authoring. Implementations are adapted into src/shots by the agent; this copy is not bundled into films."
+}

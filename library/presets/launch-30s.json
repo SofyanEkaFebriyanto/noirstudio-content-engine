@@ -1,0 +1,206 @@
+{
+  "id": "launch-30s",
+  "label": "Launch — 30 seconds, vertical",
+  "format": "reel",
+  "theme": "noir",
+  "description": "Cold open on the finished result, one problem line, the thing doing its job, one differentiator, CTA. The default product launch shape.",
+  "structure": "B",
+  "scenes": [
+    {
+      "id": "open",
+      "shot": "brand-open",
+      "durationInFrames": 66,
+      "props": {
+        "line": "EPISODE 01",
+        "particles": 30
+      }
+    },
+    {
+      "id": "promise",
+      "shot": "big-statement",
+      "durationInFrames": 150,
+      "props": {
+        "kicker": "The result first",
+        "lines": [
+          "It already *works*.",
+          "Here is how."
+        ]
+      },
+      "transition": {
+        "type": "fade",
+        "durationInFrames": 12
+      }
+    },
+    {
+      "id": "problem",
+      "shot": "title-card",
+      "durationInFrames": 126,
+      "props": {
+        "eyebrow": "The problem",
+        "title": "Hand editing does not *scale*.",
+        "subtitle": "Every platform needs the same change, separately."
+      },
+      "transition": {
+        "type": "slide",
+        "durationInFrames": 12,
+        "direction": "from-right"
+      }
+    },
+    {
+      "id": "show",
+      "shot": "footage-fill",
+      "durationInFrames": 310,
+      "props": {
+        "kicker": "Live",
+        "headline": "Watch it *run*.",
+        "caption": "Replace this clip with your product doing the job.",
+        "kenBurns": 0.05,
+        "scrim": 0.4
+      },
+      "transition": {
+        "type": "wipe",
+        "durationInFrames": 14,
+        "direction": "from-left"
+      }
+    },
+    {
+      "id": "different",
+      "shot": "compare-split",
+      "durationInFrames": 162,
+      "props": {
+        "heading": "What is different",
+        "left": {
+          "label": "Others",
+          "title": "More to manage",
+          "points": [
+            "New tool to learn",
+            "Another dashboard",
+            "Another bill"
+          ]
+        },
+        "right": {
+          "label": "Ours",
+          "title": "One file",
+          "points": [
+            "Everything in the spec",
+            "Re-render, not re-edit",
+            "Ship from the repo"
+          ]
+        },
+        "winner": "right"
+      },
+      "transition": {
+        "type": "fade",
+        "durationInFrames": 12
+      }
+    },
+    {
+      "id": "close",
+      "shot": "end-card",
+      "durationInFrames": 150,
+      "props": {
+        "line": "Start with one episode.",
+        "cta": "Follow the build",
+        "handle": "@noirstudio"
+      },
+      "transition": {
+        "type": "fade",
+        "durationInFrames": 14
+      }
+    }
+  ],
+  "voice": {
+    "_note": "Write the narration after the visual skeleton reads correctly. ~2.5 words per second.",
+    "segments": []
+  },
+  "captions": {
+    "mode": "words",
+    "style": "kinetic",
+    "windowWords": 5
+  },
+  "audio": {
+    "music": [
+      {
+        "src": "bed-tension",
+        "volume": 0.26,
+        "loop": true,
+        "fadeInFrames": 30,
+        "fadeOutFrames": 50
+      }
+    ],
+    "cues": [
+      {
+        "at": 0.2,
+        "cue": "whoosh-soft",
+        "volume": 0.6
+      },
+      {
+        "at": 1.2,
+        "cue": "sparkle",
+        "volume": 0.45
+      },
+      {
+        "at": 2.3,
+        "cue": "whoosh-soft",
+        "volume": 0.5
+      },
+      {
+        "at": 5.3,
+        "cue": "swoosh-quick",
+        "volume": 0.42
+      },
+      {
+        "at": 6.9,
+        "cue": "whoosh-soft",
+        "volume": 0.5
+      },
+      {
+        "at": 9.4,
+        "cue": "swoosh-quick",
+        "volume": 0.42
+      },
+      {
+        "at": 10.7,
+        "cue": "whoosh-soft",
+        "volume": 0.5
+      },
+      {
+        "at": 17.0,
+        "cue": "swoosh-quick",
+        "volume": 0.42
+      },
+      {
+        "at": 20.6,
+        "cue": "whoosh-soft",
+        "volume": 0.5
+      },
+      {
+        "at": 23.8,
+        "cue": "swoosh-quick",
+        "volume": 0.42
+      },
+      {
+        "at": 25.6,
+        "cue": "riser",
+        "volume": 0.32
+      },
+      {
+        "at": 26.4,
+        "cue": "impact",
+        "volume": 0.5
+      },
+      {
+        "at": 28.2,
+        "cue": "sparkle",
+        "volume": 0.45
+      }
+    ]
+  },
+  "publish": {
+    "title": "Product launch",
+    "caption": "One claim. One line of context. One ask.",
+    "hashtags": [
+      "noirstudio"
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "noirstudio-content-engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Noir Studio content engine \u2014 episode spec in, finished social film out. Remotion + shot library + ElevenLabs + Zernio.",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "sync": "tsx script/sync.ts",
+    "check": "tsx script/check.ts",
+    "typecheck": "tsc --noEmit",
+    "new": "tsx script/new.ts",
+    "studio": "npm run sync && remotion studio src/index.ts",
+    "render": "tsx script/render.ts",
+    "still": "tsx script/render.ts --still",
+    "vo": "tsx script/vo.ts",
+    "audio": "tsx script/audio.ts",
+    "footage": "tsx script/footage.ts",
+    "gallery": "tsx script/gallery.ts",
+    "master": "tsx script/master.ts",
+    "publish": "tsx script/publish.ts",
+    "doctor": "tsx script/doctor.ts",
+    "shotcraft": "tsx script/shotcraft.ts",
+    "shots": "tsx script/shots.ts"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.538",
+    "@remotion/cli": "4.0.538",
+    "@remotion/fonts": "4.0.538",
+    "@remotion/renderer": "4.0.538",
+    "@remotion/transitions": "4.0.538",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "remotion": "4.0.538",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.0",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3"
+  }
+}

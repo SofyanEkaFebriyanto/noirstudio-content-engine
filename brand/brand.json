@@ -1,0 +1,94 @@
+{
+  "$schema": "./brand.schema.json",
+  "name": "Noir Studio",
+  "wordmark": "NOIR STUDIO",
+  "wordmarkParts": [
+    {
+      "text": "NOIR",
+      "accent": false
+    },
+    {
+      "text": "STUDIO",
+      "accent": true
+    }
+  ],
+  "monogram": "N",
+  "tagline": "Motion for people who ship.",
+  "description": "A small motion studio. We make films that explain things — built from code, voiced by machine, published everywhere.",
+  "voice": {
+    "personality": [
+      "precise",
+      "dry",
+      "warm underneath",
+      "allergic to hype"
+    ],
+    "do": [
+      "State the concrete thing that happened.",
+      "Use short declaratives. One idea per sentence.",
+      "Let numbers carry the emotion.",
+      "Say 'we' for the studio, 'you' for the viewer."
+    ],
+    "dont": [
+      "No 'revolutionary', 'game-changing', 'unlock', 'supercharge', '10x your anything'.",
+      "No emoji in narration or on-screen copy.",
+      "No rhetorical questions as a substitute for a claim.",
+      "Never promise a result the film does not show."
+    ],
+    "sampleLines": [
+      "Most films say too much. This one says one thing.",
+      "One file. Every frame. No timeline scrubbing.",
+      "The edit is code. The code is the edit.",
+      "We ship the thing, then we ship the film about it."
+    ]
+  },
+  "colors": {
+    "charcoal": "#141414",
+    "bone": "#f4f1ea",
+    "gold": "#f2a41f",
+    "steel": "#a9a49a"
+  },
+  "type": {
+    "display": "Instrument Serif",
+    "sans": "Space Grotesk",
+    "mono": "JetBrains Mono",
+    "note": "Instrument Serif is for statements the viewer should remember. Space Grotesk carries everything functional. JetBrains Mono is for labels, metadata and micro-copy only — never for a full sentence."
+  },
+  "logo": {
+    "mark": "A regular hexagon with a solid, counters-cut N centered inside. Drawn as vector paths in src/components/Logo.tsx; the raster source is brand/logo/noir-studio.png.",
+    "clearspace": "0.5x mark height on all sides",
+    "minSize": "20px on screen / 8mm in print",
+    "ratio": "The hexagon is 1.158:1 (2/sqrt3). Never squash it into a square.",
+    "rules": [
+      "Never place the mark on a busy photo without the scrim.",
+      "Never outline, bevel, rotate or add a glow.",
+      "Gold on charcoal is the only approved pairing; bone is allowed for one-colour use.",
+      "The wordmark is set, not drawn - do not letter-space it further.",
+      "STUDIO takes the gold; NOIR stays in bone."
+    ]
+  },
+  "motion": {
+    "energy": "low-to-medium",
+    "principle": "Everything decelerates into place. Nothing bounces for its own sake.",
+    "entrances": "y + blur + opacity move together on one easing; never stagger the three channels.",
+    "holds": "Any frame the viewer must read holds at least 1 second.",
+    "camera": "No handheld drift. Pushes are linear-to-eased and under 8% scale.",
+    "transitions": [
+      "fade",
+      "wipe",
+      "slide",
+      "flip",
+      "clock-wipe"
+    ],
+    "avoid": [
+      "spin",
+      "rubber-band overshoot",
+      "particle confetti",
+      "typewriter for more than one line"
+    ]
+  },
+  "assets": {
+    "fontFiles": "public/fonts/",
+    "logos": "public/brand/",
+    "note": "Raster/vector logos are optional; the mark and wordmark are drawn in code (src/components/Logo.tsx) so they always render sharp."
+  }
+}

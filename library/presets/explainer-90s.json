@@ -1,0 +1,288 @@
+{
+  "id": "explainer-90s",
+  "label": "Explainer — 90 seconds, wide",
+  "format": "wide",
+  "theme": "noir",
+  "description": "Hook, tension, reframe, three proof beats, so-what, close. For technical explainers and conference cuts.",
+  "structure": "A",
+  "scenes": [
+    {
+      "id": "hook",
+      "shot": "big-statement",
+      "durationInFrames": 252,
+      "props": {
+        "kicker": "The claim",
+        "lines": [
+          "Most films say *too much*."
+        ]
+      }
+    },
+    {
+      "id": "tension",
+      "shot": "compare-split",
+      "durationInFrames": 426,
+      "props": {
+        "heading": "Why the obvious approach fails",
+        "left": {
+          "label": "The obvious way",
+          "title": "One long export",
+          "points": [
+            "Every change is a re-edit",
+            "Timing lives in a person's head",
+            "Nothing is reproducible"
+          ]
+        },
+        "right": {
+          "label": "The actual problem",
+          "title": "The film is not data",
+          "points": [
+            "Copy is scattered",
+            "Captions are hand-timed",
+            "Publishing is manual"
+          ]
+        },
+        "winner": "right"
+      },
+      "transition": {
+        "type": "fade",
+        "durationInFrames": 14
+      }
+    },
+    {
+      "id": "turn",
+      "shot": "title-card",
+      "durationInFrames": 282,
+      "props": {
+        "eyebrow": "The reframe",
+        "title": "Make the film a *spec*.",
+        "subtitle": "Scenes, words, cues — one typed file.",
+        "footnote": "noirstudio"
+      },
+      "transition": {
+        "type": "fade",
+        "durationInFrames": 14
+      }
+    },
+    {
+      "id": "proof-1",
+      "shot": "process-flow",
+      "durationInFrames": 448,
+      "props": {
+        "heading": "Proof 1 · the pipeline",
+        "steps": [
+          {
+            "title": "Write the spec",
+            "note": "Scenes, copy, narration, cues."
+          },
+          {
+            "title": "Check and still",
+            "note": "Fast loop, no full renders."
+          },
+          {
+            "title": "Render and master",
+            "note": "Every format, one timeline."
+          },
+          {
+            "title": "Publish",
+            "note": "One schedule per platform."
+          }
+        ]
+      },
+      "transition": {
+        "type": "slide",
+        "durationInFrames": 14,
+        "direction": "from-right"
+      }
+    },
+    {
+      "id": "proof-2",
+      "shot": "timeline-bar",
+      "durationInFrames": 396,
+      "props": {
+        "heading": "Proof 2 · the loop",
+        "events": [
+          {
+            "when": "Minute 0",
+            "title": "Episode drafted",
+            "note": "Script and beat sheet"
+          },
+          {
+            "when": "Minute 10",
+            "title": "First stills",
+            "note": "Layout and copy checked"
+          },
+          {
+            "when": "Minute 25",
+            "title": "Voice and cues",
+            "note": "Narration and sound locked"
+          },
+          {
+            "when": "Minute 35",
+            "title": "Shipped",
+            "note": "Scheduled to every platform"
+          }
+        ],
+        "active": 3
+      },
+      "transition": {
+        "type": "fade",
+        "durationInFrames": 12
+      }
+    },
+    {
+      "id": "proof-3",
+      "shot": "stat-slam",
+      "durationInFrames": 282,
+      "props": {
+        "value": "1",
+        "unit": "file",
+        "label": "drives the timeline, the captions, the cue sheet and the publish payload",
+        "caption": "nothing drifts apart"
+      },
+      "transition": {
+        "type": "fade",
+        "durationInFrames": 12
+      }
+    },
+    {
+      "id": "sowhat",
+      "shot": "big-statement",
+      "durationInFrames": 312,
+      "props": {
+        "kicker": "So what",
+        "lines": [
+          "Fix the sentence.",
+          "Re-render the film."
+        ]
+      },
+      "transition": {
+        "type": "fade",
+        "durationInFrames": 12
+      }
+    },
+    {
+      "id": "close",
+      "shot": "subscribe-cta",
+      "durationInFrames": 396,
+      "props": {
+        "headline": "Follow the build.",
+        "sub": "New episodes every week.",
+        "cta": "Subscribe"
+      },
+      "transition": {
+        "type": "fade",
+        "durationInFrames": 16
+      }
+    }
+  ],
+  "captions": {
+    "mode": "words",
+    "style": "kinetic",
+    "windowWords": 6
+  },
+  "audio": {
+    "music": [
+      {
+        "src": "bed-tension",
+        "volume": 0.24,
+        "loop": true,
+        "fadeInFrames": 36,
+        "fadeOutFrames": 60
+      }
+    ],
+    "cues": [
+      {
+        "at": 0.2,
+        "cue": "whoosh-soft",
+        "volume": 0.6
+      },
+      {
+        "at": 1.2,
+        "cue": "sparkle",
+        "volume": 0.45
+      },
+      {
+        "at": 8.5,
+        "cue": "whoosh-soft",
+        "volume": 0.5
+      },
+      {
+        "at": 17.2,
+        "cue": "swoosh-quick",
+        "volume": 0.42
+      },
+      {
+        "at": 22.2,
+        "cue": "whoosh-soft",
+        "volume": 0.5
+      },
+      {
+        "at": 28.0,
+        "cue": "swoosh-quick",
+        "volume": 0.42
+      },
+      {
+        "at": 31.2,
+        "cue": "whoosh-soft",
+        "volume": 0.5
+      },
+      {
+        "at": 40.3,
+        "cue": "swoosh-quick",
+        "volume": 0.42
+      },
+      {
+        "at": 45.6,
+        "cue": "whoosh-soft",
+        "volume": 0.5
+      },
+      {
+        "at": 53.7,
+        "cue": "swoosh-quick",
+        "volume": 0.42
+      },
+      {
+        "at": 58.4,
+        "cue": "whoosh-soft",
+        "volume": 0.5
+      },
+      {
+        "at": 64.2,
+        "cue": "swoosh-quick",
+        "volume": 0.42
+      },
+      {
+        "at": 67.4,
+        "cue": "whoosh-soft",
+        "volume": 0.5
+      },
+      {
+        "at": 73.8,
+        "cue": "swoosh-quick",
+        "volume": 0.42
+      },
+      {
+        "at": 77.4,
+        "cue": "riser",
+        "volume": 0.32
+      },
+      {
+        "at": 78.2,
+        "cue": "impact",
+        "volume": 0.5
+      },
+      {
+        "at": 84.6,
+        "cue": "sparkle",
+        "volume": 0.45
+      }
+    ]
+  },
+  "publish": {
+    "title": "Explainer",
+    "caption": "One claim, three proofs, one ask.",
+    "hashtags": [
+      "noirstudio"
+    ]
+  }
+}
