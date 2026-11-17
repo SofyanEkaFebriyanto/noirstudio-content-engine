@@ -5,8 +5,10 @@ import React from 'react';
 import { AbsoluteFill, useCurrentFrame } from 'remotion';
 import type { z } from 'zod';
 import { Frame } from '../components/Frame';
+import { SceneBody } from '../components/Layout';
 import { Text } from '../components/Text';
 import { Lockup, Mark, Wordmark } from '../components/Logo';
+import { Mascot } from '../components/Mascot';
 import { BRAND } from '../engine/brand';
 import { safeArea, typeScaleFor } from '../engine/theme';
 import { EASE } from '../engine/ease';
@@ -14,6 +16,7 @@ import { progress, seededRandom } from '../engine/math';
 import type { ShotContext } from '../engine/theme';
 import {
   brandOpenSchema,
+  mascotSchema,
   stingSchema,
   subscribeSchema,
 } from './schemas';
@@ -142,6 +145,49 @@ export const BrandSting: React.FC<{ props: StingProps; ctx: ShotContext }> = ({ 
           </div>
         ) : null}
       </AbsoluteFill>
+    </Frame>
+  );
+};
+
+
+/* ──────────────────────────── mascot ──────────────────────────── */
+
+
+type MascotShotProps = z.infer<typeof mascotSchema>;
+
+/**
+ * Noir the mascot, in one of the 20 poses. One entrance motion (EASE.out,
+ * opacity + rise + settle share a single progress value); the camera push
+ * stays under 8% and eases at both ends. The mascot itself is drawn by
+ * <Mascot>, so this shot only owns layout and the optional caption line.
+ */
+export const MascotShot: React.FC<{ props: MascotShotProps; ctx: ShotContext }> = ({ props, ctx }) => {
+  const frame = useCurrentFrame();
+  const p = EASE.out(progress(frame, 0, 22));
+  const push = 1 + 0.03 * EASE.inOut(progress(frame, 0, ctx.durationInFrames));
+
+  return (
+    <Frame ctx={ctx}>
+      <SceneBody ctx={ctx} align="center" captionRoom={Boolean(props.caption)}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            opacity: p,
+            transform: `translateY(${(1 - p) * 24}px) scale(${0.96 + 0.04 * p})`,
+          }}
+        >
+          <div style={{ transform: `scale(${push})` }}>
+            <Mascot pose={props.pose} flip={props.flip} ctx={ctx} />
+          </div>
+          {props.caption ? (
+            <Text ctx={ctx} variant="caption" align="center" style={{ marginTop: 8 }}>
+              {props.caption}
+            </Text>
+          ) : null}
+        </div>
+      </SceneBody>
     </Frame>
   );
 };

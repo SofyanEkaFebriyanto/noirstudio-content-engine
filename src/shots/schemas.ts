@@ -4,6 +4,7 @@
  * bundling Remotion.
  */
 import { z } from 'zod';
+import { POSE_NAMES } from '../mascot/poses';
 
 export const titleCardSchema = z.object({
   eyebrow: z.string().default(''),
@@ -203,4 +204,10 @@ export const subscribeSchema = z.object({
   headline: z.string().default('Follow the build.'),
   sub: z.string().default(''),
   cta: z.string().default('Follow'),
+});
+
+export const mascotSchema = z.object({
+  pose: z.enum(POSE_NAMES).default('wave-hello'),
+  caption: z.string().default(''),
+  flip: z.boolean().default(false),
 });

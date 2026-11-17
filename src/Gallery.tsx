@@ -25,7 +25,7 @@ const SAMPLE_PROPS: Record<string, Record<string, unknown>> = {
     header: 'What ships',
     items: [
       { index: '01', text: 'Typed episode spec', note: 'Every frame derives from one file.' },
-      { index: '02', text: 'Shot vocabulary', note: 'Twenty reusable scenes.' },
+      { index: '02', text: 'Shot vocabulary', note: 'Twenty-one reusable scenes.' },
       { index: '03', text: 'Voice + sound', note: 'ElevenLabs, cue by cue.' },
     ],
     highlight: 1,
@@ -103,6 +103,7 @@ const SAMPLE_PROPS: Record<string, Record<string, unknown>> = {
   'brand-open': { line: 'shot gallery', particles: 30 },
   'brand-sting': { text: 'NOIR STUDIO', sub: 'chapter two' },
   'subscribe-cta': { headline: 'Follow the build.', sub: 'New episodes weekly.', cta: 'Follow' },
+  mascot: { pose: 'wave-hello', caption: 'Meet Noir. Twenty poses, one character.' },
   'end-card': { line: 'Built with the Noir engine.', cta: 'Follow', handle: '@noirstudio' },
 };
 

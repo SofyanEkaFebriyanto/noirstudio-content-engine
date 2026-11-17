@@ -200,6 +200,15 @@ export const SHOT_CATALOG: ShotMeta[] = [
     schema: S.subscribeSchema,
     hints: 'cta should be a verb ("Follow", "Subscribe", "Get the kit"). One ask only.',
   },
+  {
+    id: 'mascot',
+    label: 'Mascot',
+    category: 'brand',
+    description: 'Noir the chibi robot in one of 20 poses, with an optional caption line. Headphones are always on; no backpack, no gold, no logo on the mascot.',
+    defaultDurationInFrames: 72,
+    schema: S.mascotSchema,
+    hints: 'pose is one of the 20 names in src/mascot/poses.ts (wave-hello, point-right, … facepalm). caption is optional. flip mirrors the pose. Works in every format.',
+  },
 ];
 
 const byId = new Map(SHOT_CATALOG.map((shot) => [shot.id, shot]));

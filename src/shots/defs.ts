@@ -21,7 +21,7 @@ import {
   ProcessFlow,
   TimelineBar,
 } from './layout-shots';
-import { BrandOpen, BrandSting, SubscribeCta } from './brand-shots';
+import { BrandOpen, BrandSting, MascotShot, SubscribeCta } from './brand-shots';
 import {
   EndCard,
   ListStack,
@@ -52,6 +52,7 @@ const COMPONENTS: Record<string, React.FC<{ props: never; ctx: never }>> = {
   'brand-open': BrandOpen as never,
   'brand-sting': BrandSting as never,
   'subscribe-cta': SubscribeCta as never,
+  mascot: MascotShot as never,
 };
 
 for (const meta of SHOT_CATALOG) {

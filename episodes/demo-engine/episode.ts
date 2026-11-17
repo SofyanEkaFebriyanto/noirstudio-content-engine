@@ -58,7 +58,7 @@ export default defineEpisode({
       shot: 'grid-map',
       durationInFrames: 225,
       props: {
-        heading: 'Twenty shots, one voice',
+        heading: 'Twenty-one shots, one voice',
         items: [
           'Title',
           'Statement',
