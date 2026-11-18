@@ -23,7 +23,9 @@
     "publish": "tsx script/publish.ts",
     "doctor": "tsx script/doctor.ts",
     "shotcraft": "tsx script/shotcraft.ts",
-    "shots": "tsx script/shots.ts"
+    "shots": "tsx script/shots.ts",
+    "mascot:check": "tsx script/mascot-check.ts",
+    "mascot:sheet": "remotion still src/index.ts mascot-sheet out/mascot-sheet.png"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.538",

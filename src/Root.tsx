@@ -1,5 +1,6 @@
 /**
- * Composition registry. One composition per episode, plus the shot gallery.
+ * Composition registry. One composition per episode, plus the shot gallery
+ * and the mascot character sheet.
  *
  * `src/generated/episodes.ts` is written by `npm run sync` — never edit it by
  * hand; edit `episodes/<id>/episode.ts` and re-run sync.
@@ -8,6 +9,7 @@ import React from 'react';
 import { Composition } from 'remotion';
 import { Film } from './Film';
 import { Gallery } from './Gallery';
+import { MASCOT_SHEET, MascotSheet } from './MascotSheet';
 import { FORMATS } from './engine/spec';
 import { resolveTimeline } from './engine/timeline';
 import { loadBrandFonts } from './engine/fonts';
@@ -61,6 +63,17 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
         defaultProps={{ format: 'wide' as const }}
+      />
+
+      {/* Character sheet: all 20 mascot poses on one still. `npm run mascot:sheet`. */}
+      <Composition
+        id="mascot-sheet"
+        component={MascotSheet}
+        durationInFrames={1}
+        fps={30}
+        width={MASCOT_SHEET.width}
+        height={MASCOT_SHEET.height}
+        defaultProps={{ theme: 'noir' }}
       />
     </>
   );

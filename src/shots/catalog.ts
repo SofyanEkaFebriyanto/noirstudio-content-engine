@@ -192,6 +192,17 @@ export const SHOT_CATALOG: ShotMeta[] = [
     hints: 'Run it between chapters. More than two per film feels like a bumper reel.',
   },
   {
+    id: 'mascot',
+    label: 'Mascot',
+    category: 'brand',
+    description:
+      'Noir, the studio mascot (pixel art, glowing eyes), in one of 20 poses with an optional caption line.',
+    defaultDurationInFrames: 66,
+    schema: S.mascotSchema,
+    hints:
+      'Pick the pose from the manifest (brand/BRAND.md → Mascot) that fits the beat: wave greets and signs off, point directs attention, thinking and confused carry a question. Use sparingly; one or two per film. Set flip to face the other way, effects false to drop the marks.',
+  },
+  {
     id: 'subscribe-cta',
     label: 'Subscribe CTA',
     category: 'brand',
@@ -199,15 +210,6 @@ export const SHOT_CATALOG: ShotMeta[] = [
     defaultDurationInFrames: 78,
     schema: S.subscribeSchema,
     hints: 'cta should be a verb ("Follow", "Subscribe", "Get the kit"). One ask only.',
-  },
-  {
-    id: 'mascot',
-    label: 'Mascot',
-    category: 'brand',
-    description: 'Noir the chibi robot in one of 20 poses, with an optional caption line. Headphones are always on; no backpack, no gold, no logo on the mascot.',
-    defaultDurationInFrames: 72,
-    schema: S.mascotSchema,
-    hints: 'pose is one of the 20 names in src/mascot/poses.ts (wave-hello, point-right, … facepalm). caption is optional. flip mirrors the pose. Works in every format.',
   },
 ];
 

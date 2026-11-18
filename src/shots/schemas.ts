@@ -4,7 +4,7 @@
  * bundling Remotion.
  */
 import { z } from 'zod';
-import { POSE_NAMES } from '../mascot/poses';
+import { MASCOT_POSES } from '../mascot/poses';
 
 export const titleCardSchema = z.object({
   eyebrow: z.string().default(''),
@@ -200,14 +200,19 @@ export const stingSchema = z.object({
   sub: z.string().default(''),
 });
 
+export const mascotSchema = z.object({
+  /** One of the 20 Noir poses; see brand/BRAND.md → Mascot. */
+  pose: z.enum(MASCOT_POSES).default('idle'),
+  /** One optional caption line under the mascot. Plain text; no accent word. */
+  caption: z.string().default(''),
+  /** Mirror the mascot so it faces the other way. Question marks and other glyphs are never mirrored. */
+  flip: z.boolean().default(false),
+  /** Show the pose's effect marks (question marks, sparkles, motion lines). */
+  effects: z.boolean().default(true),
+});
+
 export const subscribeSchema = z.object({
   headline: z.string().default('Follow the build.'),
   sub: z.string().default(''),
   cta: z.string().default('Follow'),
-});
-
-export const mascotSchema = z.object({
-  pose: z.enum(POSE_NAMES).default('wave-hello'),
-  caption: z.string().default(''),
-  flip: z.boolean().default(false),
 });

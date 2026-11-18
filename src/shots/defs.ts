@@ -51,8 +51,8 @@ const COMPONENTS: Record<string, React.FC<{ props: never; ctx: never }>> = {
   'vs-meter': VsMeter as never,
   'brand-open': BrandOpen as never,
   'brand-sting': BrandSting as never,
-  'subscribe-cta': SubscribeCta as never,
   mascot: MascotShot as never,
+  'subscribe-cta': SubscribeCta as never,
 };
 
 for (const meta of SHOT_CATALOG) {

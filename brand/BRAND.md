@@ -89,124 +89,101 @@ missing at render time.
 
 ## Mascot
 
-Noir the mascot is the studio's actual avatar, not the logo mark: a small
-chibi robot in dark streetwear, drawn as PIXEL ART to match Sofyan's
-reference pose sheet (rebuild 17 Nov 2026: "gw pengen 100% mirip kaya
-gini"). Big head, small body. Calm, cool, unbothered energy.
+**Noir** is a small pixel-art character: a faceless figure in a near-black
+hoodie with the hood up, over-ear headphones, cargo pants and white sneakers.
+Its identity is the face: a black void with two **glowing ice-blue eyes** and a
+thin smile. Twenty poses, one character.
+
+The reference is `brand/mascot/noir-reference-sheet.jpg`. The artwork in the
+engine is traced from it into pixel grids (`src/mascot/sprites.ts`), so what
+renders is that sheet, not an interpretation of it.
 
 ### Character sheet
 
-- **Rendering:** pixel art, not smooth vector. Every shape is built from
-  axis-aligned rectangles snapped to a 4-unit grid (60 x 80 pixels in the
-  240 x 320 viewBox, see `src/mascot/pixels.ts`) and rendered with
-  `shapeRendering="crispEdges"` — no curves, no anti-aliasing, no blur.
-  Curves are stepped rows, diagonals are staircases. One mascot pixel is
-  ~18 screen px at the 1080px reel render, so the character reads as
-  pixel art at a glance, like the reference sheet.
-- **Proportions:** chibi and chunky, from the reference sheet. The head is
-  huge — about 40% of total height — the torso is short and compact, the
-  arms and legs are short and thick, the sneakers are relatively big. The
-  ratio is locked in `src/mascot/character.ts` and reused in every pose.
-- **Head:** a stepped pixel disc: a charcoal hood behind and around a
-  clean black robot face, with a lighter grey rim around the face opening.
-  No mouth, no nose, no ears visible. A short dark neck segment shows
-  below. The head is CLEAN: no reflection, no highlight, no sheen mark
-  anywhere on it. The only thing that glows on the whole character is the
-  eyes — drawn as a flat translucent halo, never a blur filter, so the
-  pixel edges stay crisp.
-- **No backpack:** the mascot wears NO backpack. It was removed on Sofyan's
-  instruction on 17 Nov 2026 (it got in the way). No bag, no shoulder
-  straps, no buckles — the back of the hoodie is clean in every pose.
-- **Eyes (the signature):** exactly two SMALL glowing half-moon eyes, flat
-  side down, in glowing white-blue — 5px wide, 3px tall, like the
-  reference (the old vector version had oversized domes). Slightly
-  half-lidded, calm and cool, never wide open, never angry, never
-  cute-sparkle. The glow is part of the eyes and is the ONLY glow allowed
-  anywhere on the mascot. A subtle smile line sits under the eyes, like
-  the reference sheet.
-- **Hoodie:** oversized, charcoal-gray, flat tonal patches suggesting
-  fleece. The hood is UP, covering the top and sides of the head. Two
-  drawstrings hang to the chest, kangaroo pocket on the belly.
-- **Headphones:** black over-ear headphones worn OVER the hood, in every
-  pose without exception. Stepped half-ring band over the hood, one chunky
-  rectangular ear cup per side with an inner pad.
-- **Hands:** black gloves — compact stepped mitts flush with the sleeve,
-  never bulging joint balls. Finger details (wave, point, thumb,
-  finger-up) are short pixel stubs clearly attached to the mitt, never
-  long sticks.
-- **Pants:** black baggy cargo pants. One flap side pocket on each thigh,
-  on the outer edge of the leg, never centred on the leg axis (a dark dot
-  on the axis reads as a knee joint).
-- **Shoes:** black-and-white high-top sneakers, 11px wide — chunky, with a
-  white upper, black heel and toe cap, lace marks, white midsole and dark
-  outsole. At the default stance the two soles keep a 1px gap so they
-  never merge into one white bar.
-- **Palette (mascot only):** near-monochrome black and charcoal. The only
-  bright elements are the glowing white-blue eyes and the white sneaker
-  panels/soles. NO gold on the mascot, ever — gold stays reserved for
-  on-screen text and numbers.
-- **No text, no logos, no badges on the mascot.** The hexagon+N mark is a
-  separate logo asset and does NOT appear on the mascot's chest or clothes.
-  The chest carries the kangaroo pocket, nothing else.
-- **Head tilt and body lean are 1-pixel horizontal shifts, never
-  rotations** — a rotated rectangle would break the pixel grid.
+- **Head** — hood up, face a black void. Two glowing eyes, ice-blue and white
+  (`#dbe8f2` at the core), and one thin light smile. Nothing else on the face.
+- **Headphones** — over-ear, always on, both cups visible in front-facing poses.
+- **Body** — oversized hoodie with a kangaroo pocket and a drawstring, cargo
+  pants with side pockets, white sneakers with black soles.
+- **Style** — pixel art. Hard pixel edges, a dark palette of about two dozen
+  near-blacks and greys, one white on the sneakers, one cold blue on the eyes.
+  No gradients, no glow, no blur. It is always drawn with crisp edges.
+- **Ground shadow** — a flat grey ellipse under the feet, as on the sheet.
 
-All 20 poses reuse the exact same geometry and change ONLY limb positions,
-head shift (max 1 pixel) and one held prop. Limb rule (pixel-art rebuild
-17 Nov 2026, from Sofyan's reference pose sheet): limbs are SHORT, THICK
-and TUCKED CLOSE to the torso, drawn as pixel staircases. Every arm is two
-segments — a short upper-arm stub to an elbow tucked near the shoulder,
-then a forearm folding to the hand — so a bent arm reads as a clear
-deliberate fold and a hanging arm reads as a dead-straight tube. Never a
-long thin bar with a slight mid kink: at full size that reads as a broken
-bone. Hands are compact stepped mitts flush with the sleeve, finger
-details are short pixel stubs. Raised hands (wave, thumbs-up, celebrate,
-launch) sit OUTSIDE the head silhouette, clear of the ear cups — a fist
-on top of a cup reads as one merged blob. Legs are dead-straight thick
-columns, hip to foot, with no knee joint drawn at all, except sit-relaxed,
-whose knees fold out to the sides and feet tuck in like the reference Sit
-pose. Cargo pockets sit on the outer edge of the upper thigh, never
-centred on the leg (a dot on the leg axis reads as a knee joint).
-Implementation lives in `src/mascot/pixels.ts` (pixel raster core),
-`src/mascot/character.ts` (single source of truth),
-`src/mascot/poses.ts` (pose manifest) and `src/components/Mascot.tsx`; the
-`mascot` shot wires it into the catalog.
+### Colors and themes
+
+The figure keeps its own palette; the theme only decides how it separates from
+the ground.
+
+| Part | Source |
+| --- | --- |
+| Hoodie, pants, headphones, shoes | traced palette (near-black and greys, white) |
+| **Eyes** | traced ice-blue palette. **Never recolor.** |
+| Rim | `textMuted`, a 1-pixel halo around the silhouette, on dark themes only |
+| Effect marks in near-black | `text` on dark themes, as drawn on light themes |
+| Red anger mark, gold sparkles | as drawn |
+
+- A near-black hoodie vanishes into a charcoal ground, so on dark themes
+  (noir, signal) Noir gets a 1-pixel steel rim. On a light theme (paper) there
+  is no rim and the figure sits on the ground as drawn.
+- The eyes are the one constant. They are the first thing a viewer reads, so
+  they are never tinted to match an accent, a theme, or a season.
+- Effect marks (`?`, `!!`, `zzz`, sparkles, motion lines) belong to the pose
+  and can be dropped with `effects: false`. The red mark and the gold sparkles
+  are the only warm colors Noir ever carries; use them as drawn or not at all.
 
 ### The 20 poses
 
-| Pose | Used for |
-|---|---|
-| wave-hello | Greetings / brand-open |
-| point-right | Directing attention to the right |
-| present | Presenting a board or result to the side |
-| think | Considering, weighing an idea |
-| type | Working at a keyboard |
-| read | Reading a document |
-| thumbs-up | Approval, a thing that works |
-| celebrate | A win, a launch, a milestone |
-| shrug | Uncertain, "we do not know yet" |
-| idea | An idea lands (bulb glows white-blue, never gold) |
-| phone | Checking a phone, a notification arrives |
-| wave-goodbye | End-card farewell |
-| subscribe-point | Pointing down at a CTA |
-| laugh | Joyful beat (eyes stay half-moon, never change shape) |
-| explain | Mid-explanation, one hand open |
-| inspect | Looking closer at a detail |
-| launch | Take-off energy, shipping something |
-| sit-relaxed | Chill beat, a pause between chapters (feet tucked under the hips, 56px apart so both shoes stay separate — never overlapping into one blob, never splayed into a wide V) |
-| walk | Mid-stride, moving to the next idea |
-| facepalm | Bloopers / fail moments (the only pose where the eyes are covered) |
+| Pose | Reference label | Marks | Fits this episode moment |
+| --- | --- | --- | --- |
+| `idle` | Idle | · | The default stance: any beat where Noir is simply present, beside a stat or under a title. |
+| `idle-2` | Idle 2 | · | Relaxed variant of idle, one hand on the hip. Alternate with idle in a long scene so it never freezes. |
+| `cross-arms` | Cross Arms | · | Skeptical or unimpressed: testing a claim, a "does it really work" beat before the proof. |
+| `wave` | Wave | yes | Greeting and sign-off: the first beat of an episode, or the goodbye on the end card. |
+| `thumbs-up` | Thumbs Up | yes | Confirms a result that held up: a check that passed, a render that matched, a fix that worked. |
+| `point` | Point | yes | Directs attention to a stat, list or panel placed to the left of Noir. Use flip to point right. |
+| `peace` | Peace | yes | Light sign-off or a casual aside; softer than wave. Good for the outro after the ask. |
+| `thinking` | Thinking | yes | The question beat before an answer, a trade-off, or a decision the viewer is weighing. |
+| `confused` | Confused | yes | Honest uncertainty: something that did not behave, an unexpected output, an open question. |
+| `shocked` | Shocked | yes | A surprising number or a failure nobody saw coming. Keep it short and pair it with the explanation. |
+| `walk` | Walk | yes | Transitions and progress: moving from one chapter to the next, or into a new section. |
+| `run` | Run | yes | Speed and urgency that is real: a fast pipeline, a quick build, racing a deadline we actually had. |
+| `jump` | Jump | yes | A milestone earned and shown: shipped, published, goal met. |
+| `sit` | Sit | · | Quiet, low-stakes beats: a pause between chapters, a calm aside, listening to the voiceover. |
+| `crouch` | Crouch | · | Looking closely or getting ready: inspecting a detail, or the beat just before a launch. |
+| `lie-down` | Lie Down | yes | Rest and downtime: the build is running, nothing to do but wait. Never on a claim. |
+| `lying-back` | Lying Back | · | Deep calm or giving up gracefully: the long wait, the end of a long night, a closing aside. |
+| `kneel` | Kneel | yes | Defeat or humility: a mistake we own, a thing that broke. Pair with the fix. |
+| `angry` | Angry | yes | Bloopers and fail moments played for the joke: the bug that cost an hour. Always paired with the fix. |
+| `victory` | Victory | yes | The earned win at the end of a hard build. One fist up; no confetti, no hype. |
 
-### Never do
+Use Noir sparingly: one or two appearances per film, never as the proof of a
+claim. Motion follows the rest of this guide: one entrance, decelerating into
+place (`EASE.out`), and a push of under 8%.
 
-- Never remove the headphones, in any pose.
-- Never add a backpack (removed 17 Nov 2026 — the back stays clean).
-- Never add a reflection or highlight to the head — it stays clean
-  glossy black, eyes only.
-- Never change the eye shape (half-moon, flat side down, white-blue glow).
-- Never add gold or a logo to the mascot, and never add a mouth.
-- Never change the sneaker colorway (black-and-white high-tops).
-- Never squash, rotate or re-proportion the head between poses.
+### Using it
+
+- In an episode: shot `mascot` with `pose`, optional `caption`, `flip`, and
+  `effects` (`npm run shots -- mascot`).
+- In code: `<Mascot ctx={ctx} pose="wave" size={...} flip effects />` from
+  `src/components/Mascot.tsx`. Omit `size` to derive it from the theme scale.
+- Review all 20 on one still: `npm run mascot:sheet` (writes
+  `out/mascot-sheet.png`). Check the sprite data with `npm run mascot:check`.
+- `flip` mirrors the character. Letter-like effects (`?`, `!`, `z`) move to the
+  other side but are never mirrored.
+- Re-trace after changing the reference: `python3 script/mascot-trace.py`
+  (needs pillow, numpy, scipy, scikit-learn; dev tool only).
+
+### Mascot — never
+
+- Never recolor the eyes, or give Noir any other face feature
+- Never take the headphones off, show the face under the hood, or give it hair
+- Never scale it with smoothing; the pixels stay hard-edged
+- Never add a gradient, glow, blur or soft shadow
+- Never swap in a different mascot, or redraw a pose by hand to "fix" it:
+  change the reference, re-trace, and review the sheet
+- Never use it on a claim, a testimonial, or a number we cannot source
+- Never flip a glyph: `?`, `!` and `z` are read left to right
 
 ## What we never make
 

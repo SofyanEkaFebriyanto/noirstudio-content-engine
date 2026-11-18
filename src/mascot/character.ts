@@ -1,220 +1,192 @@
 /**
- * Mascot character — the single source of truth for Noir's geometry.
+ * Noir: a hooded figure with headphones, glowing eyes, cargo pants and white
+ * sneakers, drawn as pixel art. SINGLE SOURCE OF TRUTH for how the character
+ * is built and turned into geometry.
  *
- * The mascot is the studio's actual avatar: a small chibi robot in dark
- * streetwear, drawn as PIXEL ART to match Sofyan's reference pose sheet
- * (17 Nov 2026: "gw pengen 100% mirip kaya gini"). It is NOT the
- * hexagon+N logo mark: no hexagon head, no N chest badge, no gold anywhere
- * on the mascot. Gold stays reserved for on-screen text and numbers.
+ * The artwork is data (`sprites.ts`, traced from the reference sheet). This
+ * module turns a pose's pixel grid into a handful of SVG paths:
  *
- * PIXEL-ART RENDERING (rebuild 17 Nov 2026): every shape is built from
- * axis-aligned rectangles snapped to a 4-unit grid (see pixels.ts) and
- * rendered with shapeRendering="crispEdges" — no smooth curves, no
- * anti-aliasing, no blur filters. Curves are stepped-row approximations,
- * diagonals are staircases. At the 1080px reel render one mascot pixel is
- * ~18 screen px: the character reads as pixel art at a glance, like the
- * reference sheet.
+ *   - one path per palette color, rectangles merged horizontally then vertically
+ *   - one rim path: a 1-pixel halo around the silhouette, for dark grounds
  *
- * PROPORTIONS (from the reference sheet, chibi and chunky): the head is
- * huge — about 40% of total height — the torso is short and compact, the
- * arms and legs are short and thick, the sneakers are relatively big.
- * The old smooth-vector mascot was too tall, narrow and long-limbed; the
- * whole silhouette is rebuilt here.
- *
- * Revision history (Sofyan's direct instructions, override the original
- * prompt): NO backpack (removed 17 Nov 2026 — it got in the way). The head
- * is clean black with NO reflection and NO highlight anywhere (revised
- * 17 Nov 13:39 — Sofyan does not want any reflection on the head). The
- * ONLY thing that glows is the eyes. The eyes are SMALL half-moons like
- * the reference — not the oversized domes the old vector version had —
- * with a subtle smile line under them where the reference has one.
- *
- * Limb rules (kept from the 17 Nov limb rebuild): limbs are SHORT, THICK
- * and TUCKED CLOSE to the torso. Every arm is two segments with a real
- * elbow tucked near the shoulder (upper arm short, forearm folds to the
- * hand). Legs are dead-straight thick columns, hip to foot, with no knee
- * point at all — except sit-relaxed, which folds the legs out to the
- * knees like the reference Sit pose. Hands are compact mitts flush with
- * the sleeve; finger details are short pixel stubs, never long sticks.
- *
- * Everything in this file is pure data / pure math: no React, no Remotion,
- * no Math.random, no Date. Every pose reuses these exact numbers and
- * changes only limb positions, head shift (max 1 pixel) and one held prop.
- *
- * Coordinate space: viewBox 0 0 240 320 (a 60 x 80 pixel grid). The
- * character stands on y = 308 (soles) and its hood tops out near y = 12.
- * Sizes in shots derive from the theme scale at reference width 1080
- * (see Mascot.tsx); nothing here is in screen pixels.
+ * Pure and deterministic: no React, no randomness, no clock. The same pose
+ * always produces byte-identical paths.
  */
+import { EYE_KEYS, SPRITES, SPRITE_CANVAS, SPRITE_PALETTE, type SpriteLayer } from './sprites';
+import type { MascotPose } from './poses';
 
-/** 2D point in mascot space. */
-export type Vec = { x: number; y: number };
-
-export const MASCOT_VIEWBOX = '0 0 240 320' as const;
-export const MASCOT_WIDTH = 240;
-export const MASCOT_HEIGHT = 320;
-
-/**
- * Mascot palette. Fixed identity colors, deliberately NOT theme tokens:
- * the character must read as the same avatar on the noir, paper and signal
- * themes. Near-monochrome black and charcoal; the only bright elements are
- * the glowing white-blue eyes and the white sneaker panels/soles.
- */
-export const MASCOT_PALETTE = {
-  /** Black robot face, gloves, headphones. */
-  headBlack: '#0b0b0c',
-  headphone: '#0a0a0a',
-  headphonePad: '#1d1d1f',
-  glove: '#0d0d0e',
-  /** Hood up, charcoal, with a lighter grey rim around the face opening. */
-  hood: '#2b2b2d',
-  hoodDark: '#1e1e20',
-  hoodRim: '#4a4a4e',
-  /** Oversized charcoal hoodie and its tonal patches. */
-  hoodie: '#262628',
-  hoodieDark: '#1b1b1d',
-  pocket: '#202022',
-  drawstring: '#17171a',
-  /** Baggy black cargo pants. Light enough to read against charcoal ground. */
-  pants: '#232327',
-  pantsDark: '#0a0a0b',
-  /** Sleeves read against the hoodie; the edge line separates both. */
-  sleeve: '#2e2e32',
-  limbEdge: '#131314',
-  /** Black-and-white high-top sneakers. */
-  sneakerWhite: '#f2f2ee',
-  sneakerBlack: '#0d0d0e',
-  sneakerSole: '#e8e8e2',
-  sneakerOutsole: '#0a0a0a',
-  /** The signature eyes: small glowing white-blue half-moons. The ONLY
-      glow on the mascot — drawn as a flat translucent halo, never a blur
-      filter, so the pixel edges stay crisp. */
-  eyeGlow: '#cfeeff',
-  eyeCore: '#eaf7ff',
-  /** Subtle smile line under the eyes, like the reference sheet. */
-  smile: '#3a3a3d',
-  /** Props. Bone for paper, white-blue for the idea bulb and phone screen. */
-  paper: '#f4f1ea',
-  propDark: '#17171a',
-  propLine: '#3a3a3d',
+export const CHARACTER = {
+  name: 'Noir',
+  /** Shared canvas, in grid pixels. Symmetric about the foot anchor so a flip never clips. */
+  canvas: SPRITE_CANVAS,
+  /** Grid pixels of breathing room around the canvas (room for the rim). */
+  pad: 3,
+  /** The glowing eyes. Noir's identity: never recolor. */
+  eyeKeys: EYE_KEYS,
+  /** Where every pose stands: the x of the foot anchor on the canvas. */
+  anchorX: SPRITE_CANVAS.width / 2,
 } as const;
 
-/** Locked proportions and anchor points, in mascot space. */
-export const MASCOT_GEOMETRY = {
-  /** Face: black robot face, a stepped disc. */
-  head: { cx: 120, cy: 80, rx: 50, ry: 46 },
-  /** Hood up, a bigger stepped disc behind and around the face. */
-  hood: { cx: 120, cy: 74, rx: 62, ry: 58 },
-  /** Lighter grey rim around the face opening (1px ring). */
-  hoodRim: { rx: 54, ry: 50, thickness: 4 },
-  /** Short dark neck segment below the head. */
-  neck: { x: 108, y: 126, width: 24, height: 16 },
-  /** Eyes: exactly two SMALL glowing half-moon eyes, flat side down —
-      5px wide, 3px tall, like the reference (the old vector eyes were
-      oversized domes). Centres 44 units apart on a 100-wide face. */
-  eyes: {
-    left: { x: 98, y: 84 },
-    right: { x: 142, y: 84 },
-    /** Eyes sit slightly half-lidded; shift down this far when looking down. */
-    lookDownShift: 4,
-  },
-  /** Subtle smile line under the eyes, like the reference sheet. */
-  smile: { cx: 120, cy: 104 },
-  /** Over-ear headphones worn OVER the hood. */
-  headphones: {
-    /** Band: a half-ring over the top of the hood. */
-    band: { cx: 120, cy: 78, outerRx: 68, outerRy: 64, thickness: 8 },
-    /** Chunky ear cups, stepped rounded rects on the sides of the head. */
-    cup: { width: 28, height: 40 },
-    leftCup: { x: 36, y: 80 },
-    rightCup: { x: 176, y: 80 },
-    pad: { width: 12, height: 24 },
-  },
-  /** Torso: oversized hoodie, short and compact (chibi). Rows widen
-      slightly from the shoulders to the hem. */
-  torso: { topY: 146, bottomY: 242, topHalfWidth: 48, bottomHalfWidth: 54 },
-  shoulders: { left: { x: 76, y: 158 }, right: { x: 164, y: 158 } },
-  hips: { left: { x: 96, y: 240 }, right: { x: 144, y: 240 } },
-  /** Kangaroo pocket on the belly; the chest carries nothing else. */
-  pocket: { x: 92, y: 202, width: 56, height: 36, rx: 8 },
-  /** Drawstrings hang to the chest. */
-  drawstrings: [
-    { from: { x: 108, y: 158 }, to: { x: 108, y: 186 } },
-    { from: { x: 132, y: 158 }, to: { x: 132, y: 186 } },
-  ],
-  /**
-   * No head reflection, no highlight: the head is clean black.
-   * (No backpack either: removed 17 Nov 2026 on Sofyan's instruction.)
-   */
-  /** Default stance: one hand tucked at the pocket, one hanging relaxed. */
-  defaultHands: { left: { x: 72, y: 224 }, right: { x: 168, y: 224 } },
-  defaultFeet: { left: { x: 96, y: 296 }, right: { x: 144, y: 296 } },
-  /** Limb widths in pixels (1px = 4 mascot units). Arms and legs are
-      THICK: thin bars read as broken sticks. */
-  limb: { armWidthPx: 5, legWidthPx: 6, gloveSizePx: 5 },
-  /** Shoes: chunky high-tops, 11px wide, 6px tall (sole included). */
-  shoe: { widthPx: 11, heightPx: 6 },
-  /** Head tilt is capped at 8 degrees, per the character spec. In the
-      pixel renderer a tilt is a 1-pixel horizontal shift of the head, not
-      a rotation — a rotated rectangle would break the pixel grid. */
-  maxHeadTiltDeg: 8,
+/** ViewBox of the art box, in grid pixels. */
+export const MASCOT_VIEWBOX = {
+  x: -CHARACTER.pad,
+  y: -CHARACTER.pad,
+  width: CHARACTER.canvas.width + CHARACTER.pad * 2,
+  height: CHARACTER.canvas.height + CHARACTER.pad * 2,
 } as const;
 
-/**
- * Elbow position for an arm from shoulder to hand. The elbow is TUCKED
- * NEAR THE SHOULDER, not at the midpoint: the upper arm is a short stub
- * going down-and-out from the shoulder, and the forearm does the reaching
- * to the hand. That is the reference anatomy — in the reference pose sheet
- * every arm reads as a clear deliberate fold (upper arm short, forearm
- * folded up/across), never as one long bar with a slight mid kink.
- *
- * `bend` is the elbow's base outward distance from the shoulder. It grows
- * a little with how high the hand is raised (a hand at the temple needs
- * the elbow further out and lower than a hand at the pocket), so a raised
- * arm folds like the reference wave/thinking poses instead of stretching
- * straight. For a hanging hand the elbow sits just outside the shoulder
- * and the forearm drops straight down — a dead-straight tube, no kink.
- * Deterministic: pure function of its inputs.
- */
-export function elbowPoint(shoulder: Vec, hand: Vec, bend: number): Vec {
-  const out = shoulder.x < 120 ? -1 : 1;
-  const raise = Math.max(0, shoulder.y - hand.y);
-  const outDist = bend + Math.min(raise, 40) * 0.2;
-  const drop = 6 + Math.min(raise, 50) * 0.3;
-  return { x: shoulder.x + out * outDist, y: shoulder.y + drop };
+/** Width / height of the art box. */
+export const MASCOT_ASPECT = MASCOT_VIEWBOX.width / MASCOT_VIEWBOX.height;
+
+export type Rect = readonly [x: number, y: number, w: number, h: number];
+
+export type LayerGeometry = {
+  /** One path per palette key, in a stable order. */
+  paths: ReadonlyArray<{ key: string; d: string }>;
+  /** 1-pixel halo around the silhouette. */
+  rim: string;
+};
+
+export type EffectGeometry = LayerGeometry & {
+  glyph: boolean;
+  /** Canvas-space bounding box of the effect, before any flip. */
+  box: Rect;
+};
+
+export type PoseGeometry = {
+  body: LayerGeometry;
+  fx: EffectGeometry[];
+};
+
+/* ───────────────────────────── decoding ───────────────────────────── */
+
+/** "a12b3" → ['a','a',...,'b','b','b'] per row. `_` is transparent. */
+export function decodeRow(row: string): string[] {
+  const out: string[] = [];
+  const re = /([A-Za-z_])(\d+)/g;
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(row)) !== null) {
+    const key = match[1]!;
+    const count = Number(match[2]);
+    for (let i = 0; i < count; i++) out.push(key);
+  }
+  return out;
+}
+
+export const decodeLayer = (layer: SpriteLayer): string[][] => layer.rows.map(decodeRow);
+
+/* ───────────────────────────── geometry ───────────────────────────── */
+
+/** Greedy merge: horizontal runs per row, then identical runs stacked vertically. */
+function mergeRects(cells: ReadonlyArray<ReadonlyArray<boolean>>): Rect[] {
+  const rects: Rect[] = [];
+  const open = new Map<string, number>(); // "x:w" → index into rects of the run still growing
+  cells.forEach((row, y) => {
+    const next = new Map<string, number>();
+    let x = 0;
+    while (x < row.length) {
+      if (!row[x]) {
+        x++;
+        continue;
+      }
+      let end = x;
+      while (end < row.length && row[end]) end++;
+      const id = `${x}:${end - x}`;
+      const prior = open.get(id);
+      if (prior !== undefined) {
+        const r = rects[prior]!;
+        rects[prior] = [r[0], r[1], r[2], r[3] + 1];
+        next.set(id, prior);
+      } else {
+        rects.push([x, y, end - x, 1]);
+        next.set(id, rects.length - 1);
+      }
+      x = end;
+    }
+    open.clear();
+    next.forEach((v, k) => open.set(k, v));
+  });
+  return rects;
+}
+
+const rectsToPath = (rects: readonly Rect[], dx: number, dy: number): string =>
+  rects.map(([x, y, w, h]) => `M${x + dx} ${y + dy}h${w}v${h}h${-w}z`).join('');
+
+/** Cells that touch the silhouette on a side but are not part of it. */
+function haloCells(grid: ReadonlyArray<ReadonlyArray<string>>): boolean[][] {
+  const h = grid.length;
+  const w = Math.max(...grid.map((r) => r.length));
+  const solid = (x: number, y: number) => y >= 0 && y < h && x >= 0 && x < (grid[y]?.length ?? 0) && grid[y]![x] !== '_';
+  const out: boolean[][] = [];
+  for (let y = -1; y <= h; y++) {
+    const row: boolean[] = [];
+    for (let x = -1; x <= w; x++) {
+      row.push(!solid(x, y) && (solid(x - 1, y) || solid(x + 1, y) || solid(x, y - 1) || solid(x, y + 1)));
+    }
+    out.push(row);
+  }
+  return out;
+}
+
+function buildLayer(layer: SpriteLayer, ox: number, oy: number): LayerGeometry {
+  const grid = decodeLayer(layer);
+  const keys = Array.from(new Set(grid.flat().filter((k) => k !== '_'))).sort();
+  const paths = keys.map((key) => ({
+    key,
+    d: rectsToPath(
+      mergeRects(grid.map((row) => row.map((k) => k === key))),
+      ox,
+      oy,
+    ),
+  }));
+  // The halo grid is offset by one cell (it starts at -1).
+  const rim = rectsToPath(mergeRects(haloCells(grid)), ox - 1, oy - 1);
+  return { paths, rim };
+}
+
+const cache = new Map<MascotPose, PoseGeometry>();
+
+/** Geometry for one pose, in canvas grid pixels. Memoized; deterministic. */
+export function poseGeometry(pose: MascotPose): PoseGeometry {
+  const hit = cache.get(pose);
+  if (hit) return hit;
+  const sprite = SPRITES[pose];
+  if (!sprite) throw new Error(`No sprite for mascot pose "${pose}"`);
+  const body = buildLayer(sprite, sprite.x, sprite.y);
+  const fx = sprite.fx.map((effect): EffectGeometry => {
+    const ox = sprite.x + effect.x;
+    const oy = sprite.y + effect.y;
+    return { ...buildLayer(effect, ox, oy), glyph: effect.glyph, box: [ox, oy, effect.width, effect.height] };
+  });
+  const geometry = { body, fx };
+  cache.set(pose, geometry);
+  return geometry;
 }
 
 /**
- * Legs have NO knee point. A leg is a dead-straight thick column from hip
- * to foot: in front view a knee bends in depth, so any sideways knee
- * displacement reads as a break. The stride or seated look comes from foot
- * placement only — except sit-relaxed, whose knees fold out to the sides
- * like the reference Sit pose (see the pose's knee fields).
+ * Largest art-box height at which this pose's actual drawing (not the shared
+ * canvas) fits in `maxWidth` pixels. A standing pose is far narrower than the
+ * canvas, which has to be wide enough for the poses lying down.
  */
-
-/** Clamp a head tilt to the locked maximum. */
-export function clampHeadTilt(deg: number): number {
-  const max = MASCOT_GEOMETRY.maxHeadTiltDeg;
-  return Math.max(-max, Math.min(max, deg));
+export function mascotFitHeight(pose: MascotPose, maxWidth: number): number {
+  const sprite = SPRITES[pose];
+  if (!sprite) throw new Error(`No sprite for mascot pose "${pose}"`);
+  let left = sprite.x;
+  let right = sprite.x + sprite.width;
+  for (const fx of sprite.fx) {
+    left = Math.min(left, sprite.x + fx.x);
+    right = Math.max(right, sprite.x + fx.x + fx.width);
+  }
+  // Flipping mirrors about the anchor, so keep the wider side on both sides.
+  const half = Math.max(CHARACTER.anchorX - left, right - CHARACTER.anchorX);
+  return (maxWidth * MASCOT_VIEWBOX.height) / (2 * half);
 }
 
-/**
- * Head tilt as a pixel shift: +1px right for a positive tilt, -1px for
- * negative, 0 when level. A rotation would break the pixel grid, so the
- * head slides one pixel instead — the same readable lean at a glance.
- */
-export function tiltShiftPx(deg: number): number {
-  if (deg >= 4) return 1;
-  if (deg <= -4) return -1;
-  return 0;
-}
+/** Fill for a palette key. Traced colors; the theme only recolors the rim. */
+export const paletteColor = (key: string): string => {
+  const color = SPRITE_PALETTE[key];
+  if (!color) throw new Error(`Unknown mascot palette key "${key}"`);
+  return color;
+};
 
-/**
- * Upper-body lean as a pixel shift: the lifted group slides 1px in the
- * lean direction. Same reason as tiltShiftPx — no rotation on the grid.
- */
-export function leanShiftPx(deg: number): number {
-  if (deg >= 4) return 1;
-  if (deg <= -4) return -1;
-  return 0;
-}
+export { SPRITES, SPRITE_PALETTE };
